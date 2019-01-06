@@ -21,6 +21,7 @@ package libSvm
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -281,8 +282,12 @@ func (model *Model) ReadModel(file string) error {
 	}
 
 	defer f.Close() // close f on method return
+	return model.ReadModelFromReader(f)
+}
 
-	reader := bufio.NewReader(f)
+func (model *Model) ReadModelFromReader(r io.Reader) error {
+
+	reader := bufio.NewReader(r)
 
 	if err := model.readHeader(reader); err != nil {
 		return err

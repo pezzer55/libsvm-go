@@ -19,6 +19,7 @@
 package libSvm
 
 import (
+	"bytes"
 	"fmt"
 	"math"
 	"os"
@@ -47,6 +48,14 @@ func NewModelFromFile(file string) *Model {
 	param := NewParameter()
 	model := NewModel(param)
 	model.ReadModel(file)	
+	return model
+}
+
+func NewModelFromString(data string) *Model {
+	param := NewParameter()
+	model := NewModel(param)
+	r := bytes.NewBuffer([]byte(data))
+	model.ReadModelFromReader(r)
 	return model
 }
 
